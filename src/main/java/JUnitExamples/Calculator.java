@@ -1,3 +1,5 @@
+package JUnitExamples;
+
 /**
  * Created by gl on 10/15/15.
  */
