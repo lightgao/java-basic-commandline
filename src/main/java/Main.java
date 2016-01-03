@@ -1,4 +1,7 @@
 import HystrixExamples.Basic.CommandHelloWorld;
+import HystrixExamples.MyHystrixConcurrencyStrategy;
+import com.netflix.hystrix.strategy.HystrixPlugins;
+import com.netflix.hystrix.strategy.concurrency.HystrixRequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -9,12 +12,15 @@ public class Main {
 
     public static void main(String[] args) {
 
-        SLF4JConsoleTest();
+//        SLF4JConsoleTest();
 
         HystrixCommandWorkWithSLF4JMDCTest();
     }
 
     private static void HystrixCommandWorkWithSLF4JMDCTest() {
+
+        HystrixPlugins.getInstance().registerConcurrencyStrategy(MyHystrixConcurrencyStrategy.getInstance());
+        HystrixRequestContext context = HystrixRequestContext.initializeContext();
 
 //        MDC.put("CorrelationID", "aaa");
         for (int i = 0; i < 20; i++) {
@@ -26,6 +32,8 @@ public class Main {
         LOG.info(new CommandHelloWorld("Bobzzz").execute());
         MDC.remove("CorrelationID");
 
+        context.shutdown();
+
     }
 
     private static void SLF4JConsoleTest() {
@@ -35,4 +43,5 @@ public class Main {
         LOG.warn("I love programming.");
         LOG.error("I am programming.");
     }
+
 }

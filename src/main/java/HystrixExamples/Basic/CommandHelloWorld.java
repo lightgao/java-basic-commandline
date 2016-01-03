@@ -48,32 +48,3 @@ public class CommandHelloWorld extends HystrixCommand<String> {
 }
 
 
-//// An equivalent Hello World solution that uses a HystrixObservableCommand instead of a HystrixCommand
-//public class HystrixExamples.Basic.CommandHelloWorld extends HystrixObservableCommand<String> {
-//
-//    private final String name;
-//
-//    public HystrixExamples.Basic.CommandHelloWorld(String name) {
-//        super(HystrixCommandGroupKey.Factory.asKey("ExampleGroup"));
-//        this.name = name;
-//    }
-//
-//    @Override
-//    protected Observable<String> construct() {
-//        return Observable.create(new Observable.OnSubscribe<String>() {
-//            @Override
-//            public void call(Subscriber<? super String> observer) {
-//                try {
-//                    if (!observer.isUnsubscribed()) {
-//                        // a real example would do work like a network call here
-//                        observer.onNext("Hello");
-//                        observer.onNext(name + "!");
-//                        observer.onCompleted();
-//                    }
-//                } catch (Exception e) {
-//                    observer.onError(e);
-//                }
-//            }
-//        });
-//    }
-//}
